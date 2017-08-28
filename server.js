@@ -45,6 +45,10 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
   if (err) throw err;
   listingData = data;
 
-  server.listen(port, function(){})
+  server.listen(port, function(){
+
+    console.log('server listening on: http://localhost:' + port);
+
+  })
 
 });
