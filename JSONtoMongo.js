@@ -10,19 +10,45 @@ var fs = require('fs'),
     config = require('./config');
 
 /* Connect to your database */
-mongoose.connect('mongodb://<ae.williams>:<yungchoponthabeat>@ds123534.mlab.com:23534/uf-directory-app-listings');
+mongoose.connect(config.db.uri, {useMongoClient: true});
 
 /* 
   Instantiate a mongoose model for each listing object in the JSON file, 
   and then save it to your Mongo database 
  */
-var Listing = mongoose.model('Listing', listingSchema);
+fs.readFile('listings.json', 'utf8', function(err, data) {
+  
+  if (err){
 
-listing.save(function(err)){
-  if(err) throw err;
+    throw err;
 
-  console.log('Listing created!');
-}
+  } 
+
+  var listings = JSON.parse(data);
+
+  listings.entries.forEach(function(listing) {
+
+    console.log("Adding listing: "+listing.code);
+
+    var listingModel = new Listing(listing);
+
+    listingModel.save(function(err) {
+
+        if (err){
+
+          throw err;
+
+        }
+
+        console.log("Saved listing: "+listing.code);
+
+    });
+
+  });
+
+});
+
+process.exit();
 
 /* 
   Once you've written + run the script, check out your MongoLab database to ensure that 
