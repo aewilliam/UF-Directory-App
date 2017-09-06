@@ -10,7 +10,14 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
 
     $scope.addListing = function() {
 
-      $scope.listings.push({code: $scope.listings.buildingCode, name: $scope.listings.buildingName});
+      $scope.listings.push({
+
+        index: $scope.listings.length,
+        code: $scope.listings.buildingCode, 
+        name: $scope.listings.buildingName
+
+      });
+      
       $scope.listings.buildingCode = "";
       $scope.listings.buildingName = "";
     
