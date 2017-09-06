@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-app="directoryApp">
+    <div class="container">
+      <div class="row">
+        <h1>UF Directory App</h1>
+      </div>
+      <div class="row" ng-controller="ListingsController" data-ng-init="searchListing(input)">
+        <div class="col-md-6">
+          <div class="input-group" id="searchBar">
+            <!-- 
+                Implement a way to filter through listings using the search bar 
+              -->
+            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" ng-model="input" ng-change="searchListing(input)" placeholder="Search">
+          </div>
+
+          <div class="tableWrapper">
+            <table class="table table-striped table-hover">
+              <tr>
+                <th>Code</th>
+                <th>Building Name</th>
+                <th></th>
+              </tr>
+              <!-- 
+                  Fill in the rest of the table:
+                      * populate the rows with the code and name of each listing
+                      * include a way to remove individual listings
+                -->
+              <tr ng-repeat="listing in listings | filter : input" ng-click="showDetails($index)">
+                <th><div>{{listing.code}}</div></th>
+                <th><div>{{listing.name}}</div></th>
+                <th>
+                  <div class="individual-delete">
+                    <button type="button" class="btn btn-danger" ng-click="deleteListing(listing)">Delete</button>
+                  </div>
+                </th>
+              </tr>
+            </table>
+          </div>
+          <!-- 
+              Write an HTML form that adds new listings to the directory 
+            -->
+          <div class="add-listings">
+            <br></br>
+            <input type="text" ng-model="listings.buildingName" placeholder="Building Name">
+            <input type="text" ng-model="listings.buildingCode" placeholder="Building Code">
+            <button type="button" class="btn btn-success" ng-submit="addListing()">Add Listing</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="jumbotron">
+            <h3>Detailed Information</h3>
+            <!-- 
+              Include a way to display detailed information about an individual listing:
+                   * consider how to use ng-click within the the table to implement this feature
+             -->
+             <p>Name: {{details.name}}</p>
+             <p>Code: {{details.code}}</p>
+             <p>Address: {{details.address}}</p>
+             <p>Coordinates</p>
+             <p>Latitude: {{details.coordinates.latitude}}</p>
+             <p>Longitude: {{details.coordinates.longitude}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://code.angularjs.org/1.4.3/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="listingController.js"></script>
+    <script src="listingFactory.js"></script>
+  </body>
+</html>
