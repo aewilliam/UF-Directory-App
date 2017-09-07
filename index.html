@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<body style="background-color:powderblue;">
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -7,7 +8,7 @@
   <body ng-app="directoryApp">
     <div class="container">
       <div class="row">
-        <h1>UF Directory App</h1>
+        <h1><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/UF_Vertical_Signature.png" width="110" height="130"> UF Directory App</h1>
       </div>
       <div class="row" ng-controller="ListingsController" data-ng-init="searchListing(input)">
         <div class="col-md-6">
@@ -36,7 +37,7 @@
                 <th><div>{{listing.name}}</div></th>
                 <th>
                   <div class="individual-delete">
-                    <button type="button" class="btn btn-danger" ng-click="deleteListing(listing)">Delete</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteListing(listing)">Delete <span class="glyphicon glyphicon-trash"></span></button>
                   </div>
                 </th>
               </tr>
@@ -48,9 +49,9 @@
           <div class="add-listings">
             <br></br>
             <form>
-              <input type="text" class="form-control" size="30" ng-model="listings.buildingName" placeholder="Building Name">
-              <input type="text" class="form-control" size="30" ng-model="listings.buildingCode" placeholder="Building Code">
-              <button type="submit" class="btn btn-success" ng-click="addListing()">Add Listing</button>
+              <input type="text" size="20" ng-model="listings.buildingName" placeholder="Building Name">
+              <input type="text" size="20" ng-model="listings.buildingCode" placeholder="Building Code">
+              <button type="submit" class="btn btn-success" ng-click="addListing()">Add Listing <span class="glyphicon glyphicon-ok"></span></button>
             </form>
           </div>
         </div>
