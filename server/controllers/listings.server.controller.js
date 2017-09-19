@@ -20,27 +20,37 @@ exports.create = function(req, res) {
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.results) {
+
     listing.coordinates = {
       latitude: req.results.lat, 
       longitude: req.results.lng
     };
+
   }
 
   /* Then save the listing */
   listing.save(function(err) {
+
     if(err) {
+
       console.log(err);
       res.status(400).send(err);
+
     } else {
+
       res.json(listing);
+
     }
+
   });
+
 };
 
 /* Show the current listing */
 exports.read = function(req, res) {
   /* send back the listing as json from the request */
   res.json(req.listing);
+
 };
 
 /* Update a listing */
@@ -50,7 +60,6 @@ exports.update = function(req, res) {
   /* Replace the article's properties with the new properties found in req.body */
   /* save the coordinates (located in req.results if there is an address property) */
   /* Save the article */
-
   for(var property in req.body){
 
     listing[property] = req.body[property];
@@ -70,7 +79,8 @@ exports.update = function(req, res) {
 
     if(err){
       
-      throw err;
+      console.log(err);
+      res.status(400).send(err);
 
     } else {
 
@@ -92,7 +102,8 @@ exports.delete = function(req, res) {
 
     if(err) {
 
-      throw err;
+      console.log(err);
+      res.status(400).send(err);
 
     } else{
 
@@ -106,13 +117,14 @@ exports.delete = function(req, res) {
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
+  
   /* Your code here */
-
-  Listing.find({}, null, {sort: {code: 1}}, function(err, listings){
+  Listing.find().sort({code: 1}).exec(function(err, listings) {
 
     if(err){
 
-      throw err;
+      console.log(err);
+      res.status(400).send(err);
     
     } else{
 
@@ -132,12 +144,20 @@ exports.list = function(req, res) {
         then finally call next
  */
 exports.listingByID = function(req, res, next, id) {
+  
   Listing.findById(id).exec(function(err, listing) {
+  
     if(err) {
+  
       res.status(400).send(err);
+  
     } else {
+  
       req.listing = listing;
       next();
+  
     }
+  
   });
+
 };
