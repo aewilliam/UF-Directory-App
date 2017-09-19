@@ -7,7 +7,7 @@ var fs = require('fs'),
     mongoose = require('mongoose'), 
     Schema = mongoose.Schema, 
     Listing = require('./ListingSchema.js'), 
-    config = require('./config');
+    config = require('./server/config/config.js');
 
 /* Connect to your database */
 mongoose.connect(config.db.uri, {useMongoClient: true});
@@ -28,7 +28,7 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
 
   listings.entries.forEach(function(listing) {
 
-    console.log("Adding listing: "+listing.code);
+    console.log("Adding listing: " + listing.code);
 
     var listingModel = new Listing(listing);
 
@@ -40,7 +40,7 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
 
         }
 
-        console.log("Saved listing: "+listing.code);
+        console.log("Saved listing: " + listing.code);
 
     });
 
