@@ -18,18 +18,30 @@ mongoose.connect(config.db.uri, {useMongoClient: true});
  */
 fs.readFile('listings.json', 'utf8', function(err, data){
   
-    if(err){
+  if(err){
+  
+    throw err;
+  
+  }    
+  
+  var listings = JSON.parse(data);
+  
+  listings.entries.forEach(function(listing){
+  
+    var listingModel = new Listing(listing);
+  
+    listingmodel.save(function(err){
+    
+      if(err){
+      
         throw err;
-    }    
-    var listings = JSON.parse(data);
-        listings.entries.forEach(function(listing){
-            var listingModel = new Listing(listing);
-            listingmodel.save(function(err){
-                if(err){
-                    throw err;
-                }
-            });
-        });
+    
+      }
+    
+    });
+  
+  });
+
 });
 
 process.exit();
